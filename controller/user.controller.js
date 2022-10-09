@@ -34,17 +34,6 @@ class UserController {
                 }
             });
     }
-    // async getUsers(req, res){
-    //     const data = await db.query('SELECT * FROM person');
-    //     const users = data.rows;
-    //     res.json(users);
-    // }
-    // async getOneUser(req, res){
-    //     const id = req.params.id;
-    //     const data = await db.query(`SELECT * FROM person WHERE id = $1`, [id]);
-    //     const user = data.rows;
-    //     res.json(user);
-    // }
     // async updateUser(req, res){
     //     const {id, name, surname} = req.body;
     //     const data = await db.query('UPDATE person SET name = $1, surname = $2 WHERE id = $3 RETURNING *', [name, surname, id]);
@@ -56,6 +45,14 @@ class UserController {
         const data = await db.query('DELETE FROM clients WHERE id = $1', [id]);
         const user = data.rows[0];
         res.json(user);
+    }
+    async successOrder(req, res){
+        const {price, client_id, address_id, products} = req.body;
+        console.log('data=>', price, client_id, address_id);
+
+        const data = await db.query(`INSERT INTO orders (client_id, products, price, address_id) VALUES ($1, $2, $3, $4)`, [client_id, products, price, address_id]);
+        const newOrder = data.rows[0];
+        res.json(newOrder);
     }
 }
 
