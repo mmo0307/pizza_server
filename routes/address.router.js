@@ -3,5 +3,7 @@ const router = new Router();
 const addressController = require('../controller/address.controller');
 
 router.get('/addresses', addressController.getAddress);
+router.post('/save-address', addressController.saveAddress);
+router.delete('/admin/addresses/delete/:id', addressController.deleteAddress);
 
 module.exports = router;
