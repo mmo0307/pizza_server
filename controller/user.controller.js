@@ -30,8 +30,6 @@ class UserController {
         db.query(`SELECT * FROM clients WHERE email= $1`,
             [email],
             (err, result) => {
-                console.log('err=>', err);
-                console.log('result=>', result);
                 if (err) {
                     res.send({err: err});
                 }
@@ -39,16 +37,13 @@ class UserController {
                 if (result.rows[0] !== undefined) {
                     bcrypt.compare(password, result.rows[0].password, (error, response) => {
                         if (response) {
-                            console.log('response=>', response);
                             res.send(result.rows[0]);
                         } else {
                             res.status(400).json({message: "Неправильный email или password"});
-                            //res.send({message: "Wrong email or password"});
                         }
                     });
                 } else {
                     res.status(400).json({message: "Пользователь не найден!"});
-                    //res.send({message: "User not found!"});
                 }
             });
     }
